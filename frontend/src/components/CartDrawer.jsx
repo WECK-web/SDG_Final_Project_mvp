@@ -34,10 +34,10 @@ const CartDrawer = () => {
                     ></div>
 
                     <div className="absolute inset-y-0 right-0 max-w-md w-full flex">
-                        <div className="h-full w-full bg-white shadow-xl flex flex-col transform transition-transform duration-300 ease-in-out">
+                        <div className="h-full w-full bg-white shadow-xl flex flex-col transform transition-transform duration-300 ease-in-out relative">
 
                             {/* Header */}
-                            <div className="px-6 py-4 border-b border-stone-100 flex items-center justify-between bg-stone-50">
+                            <div className="px-6 py-4 border-b border-stone-100 flex items-center justify-between bg-stone-50 flex-shrink-0">
                                 <div className="flex items-center gap-2">
                                     <ShoppingBag className="w-5 h-5 text-emerald-600" />
                                     <h2 className="text-lg font-bold text-stone-800">Your Cart</h2>
@@ -54,7 +54,7 @@ const CartDrawer = () => {
                             </div>
 
                             {/* Cart Items */}
-                            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                            <div className="flex-1 overflow-y-auto p-6 space-y-6 pb-52">
                                 {cart.length === 0 ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
                                         <div className="bg-stone-100 p-6 rounded-full">
@@ -122,31 +122,33 @@ const CartDrawer = () => {
                                 )}
                             </div>
 
-                            {/* Footer */}
-                            {cart.length > 0 && (
-                                <div className="border-t border-stone-100 p-6 bg-stone-50 space-y-4">
-                                    <div className="space-y-2">
-                                        <div className="flex justify-between text-stone-600">
-                                            <span>Subtotal</span>
-                                            <span>${cartTotal.toFixed(2)}</span>
-                                        </div>
-                                        <div className="flex justify-between text-stone-600">
-                                            <span>Delivery</span>
-                                            <span className="text-emerald-600 font-medium">Free</span>
-                                        </div>
-                                        <div className="flex justify-between text-lg font-bold text-stone-800 pt-2 border-t border-stone-200">
-                                            <span>Total</span>
-                                            <span>${cartTotal.toFixed(2)}</span>
-                                        </div>
+                            {/* Footer - Absolute Positioned for Guaranteed Visibility */}
+                            <div className="absolute bottom-0 left-0 right-0 border-t border-stone-100 p-6 bg-stone-50 space-y-4 z-20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+                                <div className="space-y-2">
+                                    <div className="flex justify-between text-stone-600">
+                                        <span>Subtotal</span>
+                                        <span>${cartTotal.toFixed(2)}</span>
                                     </div>
-                                    <button
-                                        onClick={handleCheckout}
-                                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-200 transition-all transform active:scale-95 flex items-center justify-center gap-2"
-                                    >
-                                        Checkout <ShoppingBag className="w-5 h-5" />
-                                    </button>
+                                    <div className="flex justify-between text-stone-600">
+                                        <span>Delivery</span>
+                                        <span className="text-emerald-600 font-medium">Free</span>
+                                    </div>
+                                    <div className="flex justify-between text-lg font-bold text-stone-800 pt-2 border-t border-stone-200">
+                                        <span>Total</span>
+                                        <span>${cartTotal.toFixed(2)}</span>
+                                    </div>
                                 </div>
-                            )}
+                                <button
+                                    onClick={handleCheckout}
+                                    disabled={cart.length === 0}
+                                    className={`w-full font-bold py-3 rounded-xl shadow-lg transition-all transform flex items-center justify-center gap-2 ${cart.length === 0
+                                        ? "bg-stone-300 text-stone-500 cursor-not-allowed shadow-none"
+                                        : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-200 active:scale-95"
+                                        }`}
+                                >
+                                    {cart.length === 0 ? "Cart is Empty" : "Checkout"} <ShoppingBag className="w-5 h-5" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

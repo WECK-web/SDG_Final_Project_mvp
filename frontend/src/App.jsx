@@ -14,7 +14,7 @@ const App = () => {
     return (
         <ToastProvider>
             <CartProvider>
-                <Router>
+                <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                     <div className="flex flex-col min-h-screen bg-stone-50 font-sans text-stone-800">
                         <Navbar />
                         <main className="flex-grow">
